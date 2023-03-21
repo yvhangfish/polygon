@@ -376,9 +376,18 @@ namespace polygon_formation {
             }
           } else { --index_; }
         } else {
-          pLineEnd_ = at->getOtherActiveTail()->getTail();
+          pLineEnd_ = at->getOtherActiveTail()->getTail();         
           if(pLineEnd_->numSegments() > 0)
           indexEnd_ = pLineEnd_->numSegments() - 1;
+          if(index_ == 0) {
+            pLine_ = at->getTail()->next(HEAD);
+            if(at->getTail()->endConnectivity(HEAD) == TAIL) {
+              index_ = pLine_->numSegments() -1;
+            } else {
+              startEnd_ = HEAD;
+              index_ = 0;
+            }
+          }
         }
         at->getTail()->joinTailToTail(*(at->getOtherActiveTail()->getTail()));
       }
